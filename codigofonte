@@ -146,8 +146,8 @@ else
                     digitalWrite(verde,LOW);
                     
                 }
-
-                      else if (distancia > 100.00 && distancia < 1000.00)
+                
+                      else if (distancia > 80.00 && distancia < 1000.00)
                       {
                           digitalWrite(vermelho, LOW);
                           
