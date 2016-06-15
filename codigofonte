@@ -1,0 +1,174 @@
+//carrega a biblioteca do sensor ultrassonico
+#include <Ultrasonic.h>
+ 
+//define os pinos para o trigger e echo do sensor ultrassonico
+#define pino_trigger 4
+#define pino_echo 5
+
+//define os pinos para os leds
+#define vermelho 11
+#define amarelo 10
+#define azul 9
+#define verde 8
+#define branco 7
+
+//define o pino para o som
+#define som 6
+ 
+//inicializa o sensor nos pinos definidos acima
+Ultrasonic ultrasonic(pino_trigger, pino_echo);
+ 
+void setup()
+{
+  
+  Serial.begin(9600);
+  Serial.println("Lendo dados do sensor...");
+
+  pinMode(vermelho, OUTPUT);
+  pinMode(amarelo, OUTPUT);
+  pinMode(azul, OUTPUT);
+  pinMode(verde, OUTPUT);
+  pinMode(branco, OUTPUT);
+
+  pinMode (som,OUTPUT); // saída para o som
+
+}
+ 
+void loop()
+{
+  
+  //le as informacoes do sensor e converte para centimetros
+  float distancia;
+  long microsec = ultrasonic.timing();
+  distancia = ultrasonic.convert(microsec, Ultrasonic::CM);
+ 
+  //exibe informacoes no serial monitor
+  Serial.print("Distancia em cm: ");
+  Serial.println(distancia);
+  delay(100);
+
+//acende os leds e toca o buzzer de acordo com a distancia
+if (distancia > 0.00 && distancia <= 20.00) 
+{
+
+  digitalWrite(vermelho, HIGH);
+
+  digitalWrite(amarelo,LOW);
+
+  digitalWrite(azul,LOW);
+
+  digitalWrite(verde,LOW);
+
+  digitalWrite(branco,LOW);
+  
+  tone(som, 1500);
+
+  delay(250);
+
+  noTone(som);
+
+ digitalWrite(vermelho, LOW);
+
+}
+
+else
+{
+  
+    if(distancia > 20.00 && distancia <= 40.00)
+    {
+        digitalWrite(vermelho, LOW);
+    
+        digitalWrite(amarelo,HIGH);
+    
+        digitalWrite(azul,LOW);
+    
+        digitalWrite(verde,LOW);
+    
+        digitalWrite(branco,LOW);
+    
+        tone(som, 1500);
+    
+        delay(500);
+    
+        noTone(som);
+    
+        digitalWrite(amarelo,LOW);
+    
+ }
+ 
+      else
+      {
+        
+          if (distancia > 40.00 && distancia <= 60.00)
+          {
+            
+              digitalWrite(vermelho, LOW);
+    
+              digitalWrite(amarelo, LOW);
+    
+              digitalWrite(azul,HIGH);
+    
+              digitalWrite(verde,LOW);
+    
+              digitalWrite(branco,LOW);
+    
+              tone(som, 1500);
+              
+              delay(1000);
+              
+              noTone(som);
+    
+              digitalWrite(azul,LOW);
+          
+          }
+
+          else
+          {
+            
+                if (distancia > 60.00 && distancia <= 80.00)
+                {
+                    digitalWrite(vermelho, LOW);
+                    
+                    digitalWrite(amarelo, LOW);
+                    
+                    digitalWrite(azul, LOW);
+                    
+                    digitalWrite(verde,HIGH);
+                    
+                    digitalWrite(branco,LOW);
+      
+                    tone(som, 1500);
+      
+                    delay(2000);
+      
+                    noTone(som);
+      
+                    digitalWrite(verde,LOW);
+                    
+                }
+
+                      else if (distancia > 100.00 && distancia < 1000.00)
+                      {
+                          digitalWrite(vermelho, LOW);
+                          
+                          digitalWrite(amarelo, LOW);
+                          
+                          digitalWrite(azul, LOW);
+                          
+                          digitalWrite(verde,LOW);
+                          
+                          digitalWrite(branco,HIGH);
+    
+                          noTone(som);
+                      }
+          }
+          }
+
+}
+
+}
+
+  
+
+
+
